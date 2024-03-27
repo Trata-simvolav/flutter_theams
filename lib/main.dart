@@ -1,3 +1,5 @@
+// 0.0.4
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,6 +10,7 @@ class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
@@ -23,7 +26,23 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
+      theme: _isDarkMode
+          ? ThemeData(
+              colorScheme: const ColorScheme.dark(
+                primary: Color.fromARGB(
+                    255, 31, 31, 31), // Задаем голубой цвет как primary
+                secondary: Color.fromARGB(
+                    255, 48, 48, 48), // Задаем зеленый цвет как secondary
+              ),
+            )
+          : ThemeData(
+              colorScheme: const ColorScheme.light(
+                primary: Color.fromARGB(
+                    255, 255, 255, 255), // Задаем голубой цвет как primary
+                secondary: Color.fromARGB(
+                    255, 214, 214, 214), // Задаем зеленый цвет как secondary
+              ),
+            ),
       home: const MyHomePage(),
     );
   }
@@ -33,23 +52,21 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).colorScheme.primary;
+    Color secondaryColor = Theme.of(context).colorScheme.secondary;
+
     return Scaffold(
+      backgroundColor: secondaryColor,
       appBar: AppBar(
-        title: const Text("Алалал"),
+        backgroundColor: primaryColor,
+        title: const Text("Where in the world?"),
         actions: [
           IconButton(
             icon: const Icon(Icons.lightbulb_outline),
@@ -64,21 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ],
+          children: <Widget>[],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
